@@ -1,0 +1,27 @@
+; 1.b Write an ALP to move block of data with overlap.
+
+
+.MODEL SMALL
+.DATA
+    BLK1 DB 01,02,03,04,05,06,07,08,09,0AH
+    BLK2 DB 10 DUP (?)
+.CODE
+    MOV AX, @DATA
+    MOV DS, AX
+    MOV ES, AX
+    MOV SI, OFFSET BLK1
+    MOV DI, OFFSET BLK2
+    MOV CX, 0AH
+    ADD SI, 0009H
+    ADD DI, 0004H
+AGAIN:
+    MOV AL, [SI]
+    MOV [DI], AL
+    DEC SI
+    DEC DI
+    DEC CL
+    JNZ AGAIN
+    MOV AH,4CH
+    INT 21H
+    END
+; END OF CODE
